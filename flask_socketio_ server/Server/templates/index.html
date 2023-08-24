@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flask-SocketIO Example</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/ui/1.13.0-rc.1/jquery-ui.min.js"
+        integrity="sha256-99EbVPLVptiwdCNWDh/DN9qe/8Lntijxrvsf3YGPO7k=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js">
+
+    </script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.2.620/styles/kendo.bootstrap-v4.min.css"
+        />
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.2.620/js/kendo.all.min.js"></script>
+    <style>
+        body {
+         height: 100vh;
+         font-family: helvetica;
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         justify-content: center;
+      }
+        table {
+            border-collapse: collapse;
+            width: 300px;
+            height: 300px;
+        }
+
+        td {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        /* Random background colors for the buttons */
+        .button-1 {
+            background-color: #ff0000;
+        }
+
+        .button-2 {
+            background-color: #00ff00;
+        }
+
+        .button-3 {
+            background-color: #0000ff;
+        }
+
+        .button-4 {
+            background-color: #180000;
+        }
+
+        .button-5 {
+            background-color: #b700ff;
+        }
+
+        .button-6 {
+            background-color: #00ffcc;
+        }
+
+        .button-7 {
+            background-color: #fbff00;
+        }
+
+        .button-8 {
+            background-color: #6e1a1a;
+        }
+
+        .button-9 {
+            background-color: #380000;
+        }
+    </style>
+    <script src='jquery-3.6.3.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <h1>Random Colored Buttons in a Table</h1>
+    <div id="landing">
+        <input type="text" id="username" placeholder="Username">
+        <button id="join-btn">JOIN</button>
+    </div>
+
+    <div id="chat" style="display:none;">
+
+        <ul id="chat-messages">
+        </ul>
+        <input type="text" id="message" placeholder="Enter a Message">
+
+        <table>
+            <tr>
+                <td>
+                    <div class="button button-1">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-2">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-3">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="button button-4">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-5">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-6">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="button button-7">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-8">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="button button-9">&nbsp;</div>
+                </td>
+            </tr>
+        </table>
+        <div class="slideR">
+            <p>R: 0</p>
+            <input id="slideR" type="range" min="0" max="20" value="0" />
+        </div>
+        <div class="slideG">
+            <p>G: 0</p>
+            <input id="slideG" type="range" min="0" max="20" value="0" />
+        </div>
+        <div class="slideB">
+            <p>B: 0</p>
+            <input id="slideB" type="range" min="0" max="20" value="0" />
+        </div>
+
+        <div class="title">
+            <h3>Shoot</h3>
+        </div>
+        <div class="container">
+            <input id="picker" type="color" />
+         </div>
+         <script>
+            $(document).ready(function () {
+               $("#picker").kendoColorPicker();
+            });
+         </script>
+        <div class="wrapper">
+            <span>Speed:</span>
+            <span class="minusS">-</span>
+            <span id="numS" class="numS">01</span>
+            <span class="plusS">+</span>
+        </div>
+        <div class="wrapper">
+            <span>Lenght:</span>
+            <span class="minusL">-</span>
+            <span id="numL" class="numL">01</span>
+            <span class="plusL">+</span>
+        </div>
+        <div class="wrapper">
+            <input id="numR" type="checkbox" value="1"/>
+            <span>Repeat</span>
+            
+        </div>
+        <script>
+            const plusS = document.querySelector(".plusS"),
+                minusS = document.querySelector(".minusS"),
+                numS = document.querySelector(".numS");
+            let aS = 1;
+            plusS.addEventListener("click", () => {
+                aS++;
+                aS = (aS < 10) ? "0" + aS : aS;
+                numS.innerText = aS;
+            });
+            minusS.addEventListener("click", () => {
+                if (aS > 0) {
+                    aS--;
+                    aS = (aS < 10) ? "0" + aS : aS;
+                    numS.innerText = aS;
+                }
+            });
+
+            const plusL = document.querySelector(".plusL"),
+                minusL = document.querySelector(".minusL"),
+                numL = document.querySelector(".numL");
+            let aL = 1;
+            plusL.addEventListener("click", () => {
+                aL++;
+                aL = (aL < 10) ? "0" + aL : aL;
+                numL.innerText = aL;
+            });
+            minusL.addEventListener("click", () => {
+                if (aL > 1) {
+                    aL--;
+                    aL = (aL < 10) ? "0" + aL : aL;
+                    numL.innerText = aL;
+                }
+            });
+
+        </script>
+
+
+        <div class="wrapper">
+            <!--  <input type='text' id='txt1' /> -->
+            <input type='button' id='shoot' value='Shoot' />
+            <input type='button' id='stop' value='Stop' />
+        </div>
+
+        <div class="title">
+            <h3>CountDown By Timer</h3>
+        </div>
+
+        <div class="container">
+            <input id="picker2" type="color" />
+         </div>
+         <script>
+            $(document).ready(function () {
+               $("#picker2").kendoColorPicker();
+            });
+         </script>
+
+
+        <div class="wrapper">
+            <span>Seconds:</span>
+            <select id="sec1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+                <option value="59">59</option>
+            </select>
+            <span>Minuts:</span>
+            <select id="min1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="60">60</option>
+            </select>
+            
+        </div>
+
+        <div class="wrapper">
+            <!--  <input type='text' id='txt1' /> -->
+            <input type='button' id='startDown' value='Start' />
+            <input type='button' id='stop' value='Stop' />
+        </div>
+        
+       
+        <div class="title">
+            <h3>CountUp By Timer</h3>
+        </div>
+
+        <div class="container">
+            <input id="picker3" type="color" />
+         </div>
+         <script>
+            $(document).ready(function () {
+               $("#picker3").kendoColorPicker();
+            });
+         </script>
+
+
+        <div class="wrapper">
+            <span>Seconds:</span>
+            <select id="sec2">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+                <option value="59">59</option>
+            </select>
+            <span>Minuts:</span>
+            <select id="min2">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="60">60</option>
+            </select>
+            
+        </div>
+
+        <div class="wrapper">
+            <!--  <input type='text' id='txt1' /> -->
+            <input type='button' id='startUp' value='Start' />
+            <input type='button' id='stop' value='Stop' />
+        </div>
+    </div>
+
+
+
+    <!-- Script -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#button').click(function () {
+                $('#txt1').val("Button clicked");
+            });
+        });
+
+
+    </script>
+
+
+
+
+
+    <script>
+        // Function to generate random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Event handlers for the buttons
+        const buttons = document.getElementsByClassName("button");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function () {
+
+
+
+
+
+                // switch (i) {
+                //     case 0:
+                //         document.getElementById("slide-red").style.display = "block";
+                //         document.getElementById("slide-green").style.display = "none";
+                //         document.getElementById("slide-blue").style.display = "none";
+                //         break;
+                //     case 1:
+                //         document.getElementById("slide-red").style.display = "none";
+                //         document.getElementById("slide-green").style.display = "block";
+                //         document.getElementById("slide-blue").style.display = "none";
+                //         break;
+                //     case 2:
+                //         document.getElementById("slide-red").style.display = "none";
+                //         document.getElementById("slide-green").style.display = "none";
+                //         document.getElementById("slide-blue").style.display = "block";
+                //         break;
+                // }
+            });
+        }
+
+        // Generate random colors for the buttons
+        // for (let i = 0; i < buttons.length; i++) {
+        //     buttons[i].style.backgroundColor = getRandomColor();
+        // }
+    </script>
+
+
+
+
+
+    <script>
+        const socket = io({ autoConnect: false });
+
+        document.getElementById("join-btn").addEventListener("click", function () {
+            let username = document.getElementById("username").value;
+
+            socket.connect();
+
+            socket.on("connect", function () {
+                socket.emit("user_join", username);
+            })
+
+            document.getElementById("chat").style.display = "block";
+            document.getElementById("landing").style.display = "none";
+        });
+
+        document.getElementById("message").addEventListener("keyup", function (event) {
+            if (event.key == "Enter") {
+                let message = document.getElementById("message").value;
+                socket.emit("new_message", message);
+                document.getElementById("message").value = "";
+            }
+        });
+
+        socket.on("chat", function (data) {
+            let ul = document.getElementById("chat-messages");
+            let li = document.createElement("li");
+            li.appendChild(document.createTextNode(data["username"] + ": " + data["message"]));
+            ul.appendChild(li);
+            ul.scrolltop = ul.scrollHeight;
+        });
+
+
+        $(".button-1").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#ff0000");
+        });
+        $(".button-2").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#00ff00");
+        });
+        $(".button-3").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#0000ff");
+        });
+
+        $(".button-4").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#180000");
+        });
+        $(".button-5").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#b700ff");
+        });
+        $(".button-6").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#00ffcc");
+        });
+        $(".button-7").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#fbff00");
+        });
+        $(".button-8").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#380000");
+        });
+        $(".button-9").click(function () {
+            //$(".button-1").hide();
+            socket.emit("new_message", "#850303");
+        });
+
+
+        $("#slideR").change(function () {
+            console.log(document.getElementById("slideR").value);
+            socket.emit("new_message", "!" + document.getElementById("slideR").value + " " + document.getElementById("slideG").value + " " + document.getElementById("slideB").value);
+        });
+
+
+        $("#slideG").change(function () {
+            console.log($('#slideG').value);
+            socket.emit("new_message", "!" + document.getElementById("slideR").value + " " + document.getElementById("slideG").value + " " + document.getElementById("slideB").value);
+        });
+
+        $("#slideB").change(function () {
+            console.log($('#slideB').value);
+            socket.emit("new_message", "!" + document.getElementById("slideR").value + " " + document.getElementById("slideG").value + " " + document.getElementById("slideB").value);
+        });
+
+        $("#shoot").click(function () {
+            socket.emit("new_message", "@" + document.getElementById("numS").innerHTML + " " + document.getElementById("numL").innerText + " " + document.getElementById("numR").checked + " " + document.getElementById("picker").value);
+        });
+        $("#startDown").click(function () {
+            socket.emit("new_message", "$" + "D " +  document.getElementById("sec1").value + " " + document.getElementById("min1").value + " "  + document.getElementById("picker2").value);
+        });
+        $("#startUp").click(function () {
+            socket.emit("new_message", "$" + "U "  + document.getElementById("sec2").value + " " + document.getElementById("min2").value + " "  + document.getElementById("picker3").value);
+        });
+        $("#stop").click(function () {          
+            socket.emit("new_message", "@" + "stop");
+        });
+    </script>
+</body>
+
+</html>

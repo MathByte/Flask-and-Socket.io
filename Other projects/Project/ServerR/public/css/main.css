@@ -1,0 +1,65 @@
+body {
+    background-color: rgb(24, 122, 122);
+}
+
+.head>p {
+    font-size: 40px;
+
+}
+
+
+.collor {
+    width: 33.33%;
+    height: 100px;
+
+
+}
+
+table {
+    width: 100%;
+}
+
+
+
+.collor-red {
+    background-color: rgb(255, 0, 0);
+}
+
+.collor-blue {
+    background-color: rgb(0, 0, 255);
+}
+
+.collor-green {
+    background-color: rgb(0, 255, 0);
+}
+
+.color-white {
+    background-color: rgb(255, 255, 255);
+}
+
+.color-black {
+    background-color: rgb(0, 0, 0);
+}
+
+.color-gray {
+    background-color: rgb(128, 128, 128);
+}
+
+
+
+#rangeeBrightness {
+    margin-top: 10px;
+    width: 100%;
+}
+
+
+#rangeeRGB {
+    width: 90%;
+}
+
+#can {
+
+
+    background-color: #000000;
+
+}

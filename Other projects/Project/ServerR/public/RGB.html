@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta
+      name="viewport"
+      content="width=device-width, inital-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td class="head" colspan="3">
+          <p style="text-align: center">Solid Color</p>
+        </td>
+      </tr>
+      <tr>
+        <td onclick="red()" class="collor collor-red"></td>
+        <td onclick="blue()" class="collor collor-blue"></td>
+        <td onclick="green()" class="collor collor-green"></td>
+      </tr>
+      <tr>
+        <td onclick="black()" class="collor color-black"></td>
+        <td onclick="gray()" class="collor color-gray"></td>
+        <td onclick="white()" class="collor color-white"></td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <input
+            id="rangee"
+            onchange="updateslider()"
+            type="range"
+            min="1"
+            max="255"
+            value="50"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="head" colspan="3">
+          <p style="text-align: center">Chanable Color</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <p style="float: left">R</p>
+            <input
+              id="rangeeG"
+              onchange="getRGBColor()"
+              type="range"
+              min="1"
+              max="255"
+              value="1"
+            />
+            <p style="float: left">G</p>
+            <input
+              id="rangeeB"
+              onchange="getRGBColor()"
+              type="range"
+              min="1"
+              max="255"
+              value="1"
+            />
+            <p style="float: left">B</p>
+            <input
+              id="rangeeR"
+              onchange="getRGBColor()"
+              type="range"
+              min="1"
+              max="255"
+              value="1"
+            />
+          </div>
+        </td>
+
+        <td id="can"></td>
+      </tr>
+
+      <tr>
+        <td><input type="button" value="Option 1" /></td>
+      </tr>
+    </table>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/js/chat.js"></script>
+    <script type="text/javascript" src="/js/libs/moment.js"></script>
+    <script type="text/javascript" src="/js/libs/mustache.js"></script>
+  </body>
+</html>
